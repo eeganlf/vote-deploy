@@ -10,7 +10,7 @@ node {
     stage('Update GIT') {
             script {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    withCredentials([usernamePassword(credentialsId: 'JenkinsGithubCreds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'eeganlf-github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh "git config user.email yourGitHubEmail@email.com"
                         sh "git config user.name yourGitHubUsername"
                         sh "cat vote-ui-deployment.yaml"
