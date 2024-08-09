@@ -10,13 +10,11 @@ node {
     stage('Update GIT') {
             script {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    withCredentials([usernamePassword(credentialsId: 'eeganlf github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        //def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-                        sh "git config user.email eeganlf@linuxfoundation.org"
-                        sh "git config user.name Eric"
-                        // sh "git switch master"
+                    withCredentials([usernamePassword(credentialsId: 'JenkinsGithubCreds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        sh "git config user.email yourGitHubEmail@email.com"
+                        sh "git config user.name yourGitHubUsername"
                         sh "cat vote-ui-deployment.yaml"
-                        sh "sed -i 's+okapetanios/vote.*+okapetanios/vote:${DOCKERTAG}+g' vote-ui-deployment.yaml"
+                        sh "sed -i 's+dockerHubUserName/vote.*+dockerHubUsername/vote:${DOCKERTAG}+g' vote-ui-deployment.yaml"
                         sh "cat vote-ui-deployment.yaml"
                         sh "git add ."
                         sh "git commit -m 'Done by Jenkins Job deployment: ${env.BUILD_NUMBER}'"
